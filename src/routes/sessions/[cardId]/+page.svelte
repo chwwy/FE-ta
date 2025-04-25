@@ -29,23 +29,68 @@
 
     const payload = await res.json();
     session = payload.sessions[0] ?? null;
-    status  = null;
+    status = session ? null : 'No session found.';
   }
 
   onMount(waitForSessionEndAndFetch);
 </script>
 
-<main class="p-6 max-w-xl mx-auto text-center">
-  <h2 class="text-xl font-bold mb-4">Treadmill Session</h2>
+<svelte:head>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+</svelte:head>
 
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+  }
+
+  header {
+    background-color: #6200ea;
+    color: white;
+    text-align: center;
+    padding: 1rem 2rem;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .stat {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+  }
+
+  footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+  }
+</style>
+
+<header>
+  <h1>Session Results</h1>
+  <p>Card: {cardId}</p>
+</header>
+
+<div class="container">
   {#if status}
-    <p class="text-gray-600">{status}</p>
+    <p class="stat">{status}</p>
   {:else if session}
-    <div class="mt-4 text-left space-y-1">
-      <p><strong>Card:</strong> {cardId}</p>
-      <p><strong>Ticks:</strong>   {session.tickCount}</p>
-      <p><strong>Distance:</strong> {session.distance} m</p>
-      <p><strong>Calories:</strong> {session.calories} kcal</p>
-    </div>
+    <div class="stat"><strong>Ticks:</strong> {session.tickCount}</div>
+    <div class="stat"><strong>Distance:</strong> {session.distance} meters</div>
+    <div class="stat"><strong>Calories:</strong> {session.calories} kcal</div>
   {/if}
-</main>
+</div>
+
+<footer>
+  <p>&copy; 2025 Health & Fitness Monitoring. All rights reserved.</p>
+</footer>
