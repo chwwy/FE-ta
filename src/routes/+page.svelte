@@ -43,7 +43,7 @@
     background-color: #6300ff; /* brighter purple */
     color: white;
     text-align: center;
-    padding: 1rem 1rem;
+    padding: 1rem 0rem;
   }
 
   header h1 {
