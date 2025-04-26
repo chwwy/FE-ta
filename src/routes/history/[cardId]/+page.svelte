@@ -122,7 +122,6 @@
           <h3>Session {sessions.length - i}</h3>
           <p><strong>Start:</strong> {formatDate(s.startTime)}</p>
           <p><strong>End:</strong> {formatDate(s.endTime)}</p>
-          <p><strong>Ticks:</strong> {s.tickCount}</p>
           <p><strong>Distance:</strong> {s.distance} meters</p>
           <p><strong>Calories:</strong> {s.calories} kcal</p>
         </div>
