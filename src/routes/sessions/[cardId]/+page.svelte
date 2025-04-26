@@ -85,7 +85,6 @@
   {#if status}
     <p class="stat">{status}</p>
   {:else if session}
-    <div class="stat"><strong>Ticks:</strong> {session.tickCount}</div>
     <div class="stat"><strong>Distance:</strong> {session.distance} meters</div>
     <div class="stat"><strong>Calories:</strong> {session.calories} kcal</div>
 
