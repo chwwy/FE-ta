@@ -6,6 +6,7 @@
   let cardId = '';
   let name = '';
   let weight = '';
+  let gender = ''; // 1 for Male, 2 for Female
 
   onMount(() => {
     const unsubscribe = page.subscribe(p => {
@@ -18,7 +19,7 @@
     const res = await fetch('https://kampus-jwt3.onrender.com/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cardId, name, weight })
+      body: JSON.stringify({ cardId, name, weight, gender: Number(gender) })
     });
 
     const data = await res.json();
@@ -80,7 +81,7 @@
     display: block;
   }
 
-  input {
+  input, select {
     padding: 0.5rem;
     font-size: 1rem;
     border: 1px solid #ccc;
@@ -127,6 +128,15 @@
     <div>
       <label for="weight">Weight (kg)</label>
       <input type="number" id="weight" bind:value={weight} required />
+    </div>
+
+    <div>
+      <label for="gender">Gender</label>
+      <select id="gender" bind:value={gender} required>
+        <option value="">Select Gender</option>
+        <option value="1">Male</option>
+        <option value="2">Female</option>
+      </select>
     </div>
 
     <button type="submit">Create User</button>

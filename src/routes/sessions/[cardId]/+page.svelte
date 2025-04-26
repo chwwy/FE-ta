@@ -88,8 +88,15 @@
     <div class="stat"><strong>Ticks:</strong> {session.tickCount}</div>
     <div class="stat"><strong>Distance:</strong> {session.distance} meters</div>
     <div class="stat"><strong>Calories:</strong> {session.calories} kcal</div>
+
+    <div style="margin-top: 2rem; text-align: center;">
+      <a href={`/history/${cardId}`} style="color: #6200ea; font-weight: bold; text-decoration: none;">
+        📄 Click here to see your walking sessions
+      </a>
+    </div>
   {/if}
 </div>
+
 
 <footer>
   <p>&copy; 2025 Health & Fitness Monitoring. All rights reserved.</p>
