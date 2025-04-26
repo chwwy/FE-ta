@@ -9,20 +9,42 @@
   onMount(() => {
     if (polling) return;
     polling = true;
-    status = 'Listening for active session...';
+    status = 'Listening for card scan...';
 
     poller = setInterval(async () => {
       try {
-        const res = await fetch('https://kampus-jwt3.onrender.com/sessions/active-latest');
+        const res = await fetch('https://kampus-jwt3.onrender.com/scan/card');
         if (res.ok) {
           const data = await res.json();
-          clearInterval(poller);
-          polling = false;
-          status = 'Session found! Redirecting...';
-          goto(data.userExists ? `/sessions/${data.cardId}` : `/signup/${data.cardId}`);
+          if (data.cardId) {
+            clearInterval(poller);
+            polling = false;
+            status = 'Card scanned. Checking user...';
+
+            const check = await fetch('https://kampus-jwt3.onrender.com/sessions/check-user', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ cardId: data.cardId })
+            });
+
+            const checkData = await check.json();
+            status = checkData.userExists
+              ? '✅ User exists. Redirecting to session...'
+              : '❌ User not found. Redirecting to signup...';
+
+            setTimeout(() => {
+              const path = checkData.userExists
+                ? `/sessions/${data.cardId}`
+                : `/signup/${data.cardId}`;
+              goto(path);
+            }, 1000);
+          }
         }
       } catch (err) {
         console.error('Polling error:', err);
+        status = '⚠️ Error during polling';
       }
     }, 2000);
   });
@@ -40,10 +62,10 @@
   }
 
   header {
-    background-color: #6300ff; /* brighter purple */
+    background-color: #6300ff;
     color: white;
     text-align: center;
-    padding: 1rem 0rem;
+    padding: 1rem 0;
   }
 
   header h1 {
@@ -64,7 +86,7 @@
     background: white;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
   }
 
