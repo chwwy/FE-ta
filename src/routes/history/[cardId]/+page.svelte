@@ -106,6 +106,12 @@
     <h1>Session History</h1>
     <p>For Card ID: {cardId}</p>
   </header>
+
+  <div style="margin-top: 2rem; text-align: center;">
+    <a href={`/`} style="color: #6200ea; font-weight: bold; text-decoration: none;">
+      📄 Click here to go back to main page.
+    </a>
+  </div>
   
   <div class="container">
     {#if status}
